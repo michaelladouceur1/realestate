@@ -1,5 +1,6 @@
 import requests
 import xml.etree.ElementTree as et 
+from geopy.geocoders import Nominatim as nom
 
 class API_Data():
     def __init__(self):
@@ -8,7 +9,14 @@ class API_Data():
             self.zwsid = file.read()
             print(self.zwsid)
         self.citystate = [['Chicago','IL'],['Seattle','WA'],['Portland','OR']]
-        self.request_data()
+        self.loc_sample()
+        #self.request_data()
+
+    def loc_sample(self):
+        geolocator = nom(user_agent='real_estate')
+        location = geolocator.reverse('41.8781, -87.6298')
+        print(location.address)
+
 
     def request_data(self):
         params = {'zws-id':self.zwsid,'state':self.citystate[0][1],
